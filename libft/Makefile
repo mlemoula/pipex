@@ -1,8 +1,8 @@
-CC= 		cc
-
-CFLAGS = 	-Wall -Wextra -Werror
-
-SRCS = 		./ft_atoi.c \
+CC			= cc
+CFLAGS		= -Wall -Wextra -Werror
+NAME		= libft.a
+RM			= rm -f
+SRCS		= ./ft_atoi.c \
 				./ft_bzero.c \
 				./ft_calloc.c \
 				./ft_isalnum.c \
@@ -35,11 +35,15 @@ SRCS = 		./ft_atoi.c \
 				./ft_strtrim.c \
 				./ft_substr.c \
 				./ft_tolower.c \
-				./ft_toupper.c
-				
-OBJS = 		$(SRCS:.c=.o)
+				./ft_toupper.c \
 
-SRCSBONUS = 	./ft_lstnew.c \
+SRCS_PRINTF = ./ft_printf.c \
+					./type_csdp.c \
+					./type_ptr.c \
+					./type_u.c \
+					./type_x_upx.c \
+				
+SRCSBONUS	= ./ft_lstnew.c \
 				./ft_lstadd_front.c \
 				./ft_lstsize.c \
 				./ft_lstlast.c \
@@ -47,24 +51,27 @@ SRCSBONUS = 	./ft_lstnew.c \
 				./ft_lstdelone.c \
 				./ft_lstclear.c \
 				./ft_lstiter.c \
-				./ft_lstmap.c
+				./ft_lstmap.c \
 
-OBJSBONUS =	$(SRCSBONUS:.c=.o)
+OBJS		= $(SRCS:.c=.o)
+OBJS_PRINTF	= $(SRCS_PRINTF:.c=.o)
+OBJSBONUS	= $(SRCSBONUS:.c=.o)
 
-NAME = 		libft.a
+%.o: %.c
+			$(CC) $(CFLAGS) -c $< -o $@
 
 all: 		$(NAME)
 
-$(NAME): 	$(OBJS)
-			ar -rc $(NAME) $(OBJS)
+$(NAME): 	$(OBJS) $(OBJS_PRINTF)
+			ar -rc $(NAME) $(OBJS) $(OBJS_PRINTF)
 
 clean:
-			rm -f $(OBJS) $(OBJSBONUS)
+			rm -f $(OBJS) $(OBJS_PRINTF) $(OBJSBONUS)
 
 fclean: 	clean
 			rm -f $(NAME)
 
 re: 		fclean all
 
-bonus:		$(OBJS) $(OBJSBONUS)
-			ar -rc $(NAME) $(OBJS) $(OBJSBONUS)
+bonus:		$(OBJS) $(OBJS_PRINTF) $(OBJSBONUS)
+			ar -rc $(NAME) $(OBJS) $(OBJS_PRINTF) $(OBJSBONUS)

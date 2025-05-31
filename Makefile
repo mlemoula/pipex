@@ -4,6 +4,7 @@ RM			= rm -f
 NAME		= pipex
 LIBFT		= ./libft/libft.a
 SRCS		= main.c \
+				args_checking.c \
 				init_pipex.c \
 				parsing.c \
 				clean.c \
