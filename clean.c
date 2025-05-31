@@ -6,7 +6,7 @@
 /*   By: mlemoula <mlemoula@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/01 16:51:13 by mlemoula          #+#    #+#             */
-/*   Updated: 2025/05/10 18:28:48 by mlemoula         ###   ########.fr       */
+/*   Updated: 2025/05/31 17:49:05 by mlemoula         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ static void	ft_clean_parsed_cmd(char **parsed_cmd)
 	free(parsed_cmd);
 }
 
-void	ft_clean(t_pipex *pipex)
+void	ft_clean(t_pipex *pipex, int error_flag)
 {
 	if (!pipex)
 		return ;
@@ -35,4 +35,7 @@ void	ft_clean(t_pipex *pipex)
 		ft_clean_parsed_cmd(pipex->parsed_cmd1);
 	if (pipex->parsed_cmd2)
 		ft_clean_parsed_cmd(pipex->parsed_cmd2);
+	if (error_flag)
+		exit(EXIT_FAILURE);
+	exit(EXIT_SUCCESS);
 }
