@@ -7,7 +7,7 @@ SRCS		= main.c \
 				args_checking.c \
 				init_pipex.c \
 				clean.c \
-				# parsing.c
+				parsing.c \
 
 # GNL_SRCS	= $(addprefix ./gnl/, \
 # 				get_next_line_utils.c \
