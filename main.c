@@ -6,7 +6,7 @@
 /*   By: mlemoula <mlemoula@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/19 16:15:49 by mlemoula          #+#    #+#             */
-/*   Updated: 2025/06/05 18:24:41 by mlemoula         ###   ########.fr       */
+/*   Updated: 2025/06/06 09:17:53 by mlemoula         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,15 +19,10 @@ int	main(int argc, char **argv)
 	if (argc != 5)
 		return (-1);
 	ft_init_pipex(&pipex, argv);
-	if (!ft_check_files(&pipex))
-		ft_clean(&pipex, 1);
-	if (!ft_parse_cmds(&pipex))
-		ft_clean(&pipex, 1);
-	if (pipe(pipex.pipefd))
-	{
-		perror("Can't open a pipe\n");
-		ft_clean(&pipex, 1);
-	}
+	ft_check_files(&pipex);
+	ft_parse_cmds(&pipex);
+	ft_init_pipe(&pipex);
+	ft_init_fork(&pipex);
 	// // while (cmds)
 	// 	ft_exec()
 	// ft_printf("infile: %s\noutfile: %s\ncmd1: %s\ncmd2: %s\n",

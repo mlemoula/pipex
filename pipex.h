@@ -6,7 +6,7 @@
 /*   By: mlemoula <mlemoula@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/19 16:20:21 by mlemoula          #+#    #+#             */
-/*   Updated: 2025/06/05 18:19:48 by mlemoula         ###   ########.fr       */
+/*   Updated: 2025/06/06 14:11:24 by mlemoula         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,11 +30,14 @@ typedef struct s_pipex
 	int		fd_infile;
 	int		fd_outfile;
 	int		pipefd[2];
+	pid_t	pid;
 }	t_pipex;
 
-int		ft_check_files(t_pipex *pipex);
+void	ft_check_files(t_pipex *pipex);
 void	ft_init_pipex(t_pipex *pipex, char **argv);
-int		ft_parse_cmds(t_pipex *pipex);
+void	ft_parse_cmds(t_pipex *pipex);
 void	ft_clean(t_pipex *pipex, int error_flag);
+void	ft_init_pipe(t_pipex *pipex);
+void	ft_init_fork(t_pipex *pipex);
 
 #endif
