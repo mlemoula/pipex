@@ -6,7 +6,7 @@
 /*   By: mlemoula <mlemoula@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/25 18:23:52 by mlemoula          #+#    #+#             */
-/*   Updated: 2025/06/06 14:12:42 by mlemoula         ###   ########.fr       */
+/*   Updated: 2025/06/06 15:38:07 by mlemoula         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,9 +27,8 @@ void	ft_init_pipe(t_pipex *pipex)
 	if (pipe(pipex->pipefd) != 0)
 	{
 		perror("pipe");
-		ft_clean(&pipex, 1);
+		ft_clean(pipex, 1);
 	}
-	
 }
 
 void	ft_init_fork(t_pipex *pipex)
@@ -38,6 +37,6 @@ void	ft_init_fork(t_pipex *pipex)
 	if (pipex->pid == -1)
 	{
 		perror("fork");
-		ft_clean(&pipex, 1);
+		ft_clean(pipex, 1);
 	}
 }

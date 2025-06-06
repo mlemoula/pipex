@@ -1,23 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   init_pipex.c                                       :+:      :+:    :+:   */
+/*   forking.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mlemoula <mlemoula@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/04/25 18:23:52 by mlemoula          #+#    #+#             */
-/*   Updated: 2025/05/31 17:52:19 by mlemoula         ###   ########.fr       */
+/*   Created: 2025/06/06 14:43:05 by mlemoula          #+#    #+#             */
+/*   Updated: 2025/06/06 15:38:04 by mlemoula         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pipex.h"
 
-void	ft_init_pipex(t_pipex *pipex, char **argv)
+void	ft_forking(t_pipex pipex)
 {
-	pipex->infile = argv[1];
-	pipex->cmd1 = argv[2];
-	pipex->cmd2 = argv[3];
-	pipex->outfile = argv[4];
-	pipex->parsed_cmd1 = NULL;
-	pipex->parsed_cmd2 = NULL;
+	if (pipex.pid == 0)	//Child process
+	{
+		
+	}
+	if (pipex.pid > 0)	//Parent process
+	{
+		
+	}
 }

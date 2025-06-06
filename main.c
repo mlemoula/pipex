@@ -6,7 +6,7 @@
 /*   By: mlemoula <mlemoula@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/19 16:15:49 by mlemoula          #+#    #+#             */
-/*   Updated: 2025/06/06 09:17:53 by mlemoula         ###   ########.fr       */
+/*   Updated: 2025/06/06 15:38:06 by mlemoula         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,9 @@ int	main(int argc, char **argv)
 	ft_parse_cmds(&pipex);
 	ft_init_pipe(&pipex);
 	ft_init_fork(&pipex);
-	// // while (cmds)
+	// ft_parse_input(pipex);
+	ft_forking(pipex);
+	// while (cmds)
 	// 	ft_exec()
 	// ft_printf("infile: %s\noutfile: %s\ncmd1: %s\ncmd2: %s\n",
 		// pipex.infile, pipex.outfile, pipex.cmd1, pipex.cmd2);

@@ -6,7 +6,7 @@
 /*   By: mlemoula <mlemoula@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/19 16:20:21 by mlemoula          #+#    #+#             */
-/*   Updated: 2025/06/06 14:11:24 by mlemoula         ###   ########.fr       */
+/*   Updated: 2025/06/06 15:38:08 by mlemoula         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,5 +39,6 @@ void	ft_parse_cmds(t_pipex *pipex);
 void	ft_clean(t_pipex *pipex, int error_flag);
 void	ft_init_pipe(t_pipex *pipex);
 void	ft_init_fork(t_pipex *pipex);
+// ft_parse_input(t_pipex *pipex);
 
 #endif
