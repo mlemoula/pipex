@@ -10,12 +10,7 @@ SRCS		= main.c \
 				parse.c \
 				exec.c \
 
-# GNL_SRCS	= $(addprefix ./gnl/, \
-# 				get_next_line_utils.c \
-# 				get_next_line.c)
-
 OBJS		= $(SRCS:.c=.o)
-# GNL_OBJS	= $(GNL_SRCS:.c=.o)
 
 %.o: %.c
 			$(CC) $(CFLAGS) -c $< -o $@
