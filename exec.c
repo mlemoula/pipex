@@ -6,7 +6,7 @@
 /*   By: mlemoula <mlemoula@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/06 14:43:05 by mlemoula          #+#    #+#             */
-/*   Updated: 2025/06/09 20:24:57 by mlemoula         ###   ########.fr       */
+/*   Updated: 2025/06/09 20:40:28 by mlemoula         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ static char *ft_get_single_path(char **paths, char *cmd)
 	return (NULL);
 }
 
-static char	*ft_get_cmd_path(t_pipex pipex, char *cmd)
+static char	*ft_get_cmd_path(t_pipex *pipex, char *cmd)
 {
 	char	**paths;
 	char	*env_path;
@@ -47,11 +47,11 @@ static char	*ft_get_cmd_path(t_pipex pipex, char *cmd)
 	env_path = NULL;
 	if (!cmd || !access(cmd, X_OK))
 		return (ft_strdup(cmd));
-	while(pipex.envp[i])
+	while(pipex->envp[i])
 	{
-		if (ft_strncmp(pipex.envp[i], "PATH=", 5) == 0)
+		if (ft_strncmp(pipex->envp[i], "PATH=", 5) == 0)
 		{
-			env_path = pipex.envp[i] + 5;
+			env_path = pipex->envp[i] + 5;
 			break;
 		}
 		i++;
@@ -68,7 +68,7 @@ static void	ft_execute(t_pipex *pipex, char **cmd)
 {
 	char	*cmd_path;
 
-	cmd_path = ft_get_cmd_path(*pipex, cmd[0]);
+	cmd_path = ft_get_cmd_path(pipex, cmd[0]);
 	if (!cmd_path)
 	{
 		perror(cmd[0]);
@@ -86,24 +86,31 @@ void	ft_forking(t_pipex *pipex)
 	pid_t	pid_2;
 
 	pid_1 = fork();
-	pid_2 = fork();
-	if (pid_1 < 0 || pid_2 < 0)
+	if (pid_1 < 0)
 	{
 		perror("fork");
 		ft_clean(pipex, 1);
 	}
-	if (pid_1 == 0)	//child process fork 1
+	if (pid_1 == 0)//child process fork 1
 	{
 		dup2(pipex->fd_infile, STDIN_FILENO);
 		dup2(pipex->pipefd[1], STDOUT_FILENO);
 		close(pipex->pipefd[0]);
+		close(pipex->pipefd[1]);
 		ft_execute(pipex, pipex->parsed_cmd1);
+	}
+	pid_2 = fork();
+	if (pid_2 < 0)
+	{
+		perror("fork");
+		ft_clean(pipex, 1);
 	}
 	if (pid_2 == 0)	//child process fork 2
 	{
 		dup2(pipex->pipefd[0], STDIN_FILENO);
 		dup2(pipex->fd_outfile, STDOUT_FILENO);
 		close(pipex->pipefd[1]);
+		close(pipex->pipefd[0]);
 		ft_execute(pipex, pipex->parsed_cmd2);
 	}
 	close(pipex->pipefd[0]);

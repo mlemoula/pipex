@@ -4,10 +4,8 @@ RM			= rm -f
 NAME		= pipex
 LIBFT		= ./libft/libft.a
 SRCS		= main.c \
-				check.c \
 				init.c \
 				clean.c \
-				parse.c \
 				exec.c \
 
 OBJS		= $(SRCS:.c=.o)
