@@ -6,7 +6,7 @@
 /*   By: mlemoula <mlemoula@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/21 11:16:33 by mlemoula          #+#    #+#             */
-/*   Updated: 2024/11/22 14:20:42 by mlemoula         ###   ########.fr       */
+/*   Updated: 2025/06/09 19:43:58 by mlemoula         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,9 +60,3 @@ char	*ft_itoa(int n)
 	return (num);
 }
 
-// int	main(void)
-// {
-// 	printf ("%s", "salut :)\n");
-// 	printf ("%s", ft_itoa(-214748364));
-// 	return 0;
-// }

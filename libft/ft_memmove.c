@@ -6,7 +6,7 @@
 /*   By: mlemoula <mlemoula@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/11 16:14:55 by mlemoula          #+#    #+#             */
-/*   Updated: 2024/11/19 15:11:09 by mlemoula         ###   ########.fr       */
+/*   Updated: 2025/06/09 19:44:09 by mlemoula         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,18 +36,3 @@ void	*ft_memmove(void *dest, const void *src, size_t n)
 			bytes_dest[n] = bytes_src[n];
 	return (dest);
 }
-
-// #include <string.h>
-// #include <stdio.h>
-// int main() {
-//     char src[14] = "123abcdefghijk";
-// 	char *dst = src;
-
-//     ft_memmove(src + 5, src, 6);
-// 	printf("dst: ");
-//     for (int i = 0; i < 15; i++) {
-//         printf("%c", dst[i]);
-//     }
-//     printf("\n");
-//     return 0;
-// }

@@ -6,7 +6,7 @@
 /*   By: mlemoula <mlemoula@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/18 14:40:02 by mlemoula          #+#    #+#             */
-/*   Updated: 2024/11/22 14:22:17 by mlemoula         ###   ########.fr       */
+/*   Updated: 2025/06/09 19:44:19 by mlemoula         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,20 +53,3 @@ char	*ft_strtrim(char const *s1, const char *set)
 	trimstr[i] = '\0';
 	return (trimstr);
 }
-
-// #include <unistd.h>
-// int main(void)
-// {
-// 	int i = 0;
-// 	char *s1 = "126";
-// 	char *set = "121126";
-// 	char *trimmed = ft_strtrim(s1, set);
-//
-// 	while(trimmed[i])
-// 	{
-// 		write (1,trimmed + i,1);
-// 		i++;
-// 	}
-// 	free (trimmed);
-// 	return (0);
-// }

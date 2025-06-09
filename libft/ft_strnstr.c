@@ -6,7 +6,7 @@
 /*   By: mlemoula <mlemoula@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/14 14:20:14 by mlemoula          #+#    #+#             */
-/*   Updated: 2024/11/19 16:57:01 by mlemoula         ###   ########.fr       */
+/*   Updated: 2025/06/09 19:43:37 by mlemoula         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,10 +34,3 @@ char	*ft_strnstr(const char *big, const char *little, size_t len)
 	}
 	return (NULL);
 }
-
-// #include <stdio.h>
-// int main (void)
-// {
-// 	printf("%s",ft_strnstr("Hello", "Hello", 5));
-// 	return 0;
-// }

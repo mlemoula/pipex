@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   args_checking.c                                    :+:      :+:    :+:   */
+/*   check.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mlemoula <mlemoula@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/01 11:59:19 by mlemoula          #+#    #+#             */
-/*   Updated: 2025/06/06 15:38:11 by mlemoula         ###   ########.fr       */
+/*   Updated: 2025/06/09 19:33:01 by mlemoula         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,6 @@
 
 void	ft_check_files(t_pipex *pipex)
 {
-	// if (!pipex.infile || !pipex.outfile)
-	// 	return (0);
 	if (access(pipex->infile, R_OK) != 0)
 	{
 		perror(pipex->infile);

@@ -6,7 +6,7 @@
 /*   By: mlemoula <mlemoula@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/18 17:23:13 by mlemoula          #+#    #+#             */
-/*   Updated: 2024/11/25 18:06:56 by mlemoula         ###   ########.fr       */
+/*   Updated: 2025/06/09 19:43:33 by mlemoula         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,15 +99,3 @@ char	**ft_split(char const *s, char c)
 	return (str_array);
 }
 
-// int main(void)
-// {
-// 	int i = 0;
-// 	char **ptr = ft_split("Hello yes", ' ');
-// 	while (ptr[i])
-// 	{
-// 		free (ptr[i]);
-// 		i++;
-// 	}
-// 	free (ptr);
-// 	return 0;
-// }

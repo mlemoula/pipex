@@ -6,7 +6,7 @@
 /*   By: mlemoula <mlemoula@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/21 15:53:02 by mlemoula          #+#    #+#             */
-/*   Updated: 2024/11/21 16:48:52 by mlemoula         ###   ########.fr       */
+/*   Updated: 2025/06/09 19:44:14 by mlemoula         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,9 +35,3 @@ void	ft_putnbr_fd(int n, int fd)
 	}
 	ft_putchar_fd(n % 10 + '0', fd);
 }
-
-// int main(void)
-// {
-// 	ft_putnbr_fd(4456, 1);
-// 	return 0;
-// }

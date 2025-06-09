@@ -4,10 +4,11 @@ RM			= rm -f
 NAME		= pipex
 LIBFT		= ./libft/libft.a
 SRCS		= main.c \
-				args_checking.c \
+				check.c \
 				init.c \
 				clean.c \
-				parsing.c \
+				parse.c \
+				exec.c \
 
 # GNL_SRCS	= $(addprefix ./gnl/, \
 # 				get_next_line_utils.c \
