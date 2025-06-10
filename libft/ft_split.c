@@ -6,7 +6,7 @@
 /*   By: mlemoula <mlemoula@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/18 17:23:13 by mlemoula          #+#    #+#             */
-/*   Updated: 2025/06/09 19:43:33 by mlemoula         ###   ########.fr       */
+/*   Updated: 2025/06/10 19:24:30 by mlemoula         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,4 +98,3 @@ char	**ft_split(char const *s, char c)
 	str_array[j] = NULL;
 	return (str_array);
 }
-

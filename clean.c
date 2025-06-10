@@ -6,7 +6,7 @@
 /*   By: mlemoula <mlemoula@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/01 16:51:13 by mlemoula          #+#    #+#             */
-/*   Updated: 2025/06/09 20:14:40 by mlemoula         ###   ########.fr       */
+/*   Updated: 2025/06/10 19:28:23 by mlemoula         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ void	ft_clean_charptrptr(char **parsed_cmd)
 {
 	int	i;
 
-	if (!parsed_cmd || !*parsed_cmd)
+	if (!parsed_cmd)
 		return ;
 	i = 0;
 	while (parsed_cmd[i])
@@ -27,7 +27,7 @@ void	ft_clean_charptrptr(char **parsed_cmd)
 	free(parsed_cmd);
 }
 
-void	ft_clean(t_pipex *pipex, int error_flag)
+void	ft_clean(t_pipex *pipex)
 {
 	if (!pipex)
 		return ;
@@ -42,8 +42,11 @@ void	ft_clean(t_pipex *pipex, int error_flag)
 	if (pipex->pipefd[0] >= 0)
 		close (pipex->pipefd[0]);
 	if (pipex->pipefd[1] >= 0)
-		close (pipex->pipefd[0]);
-	if (error_flag)
-		exit(EXIT_FAILURE);
-	exit(EXIT_SUCCESS);
+		close (pipex->pipefd[1]);
+}
+
+void	ft_exit(t_pipex *pipex, int exit_code)
+{
+	ft_clean(pipex);
+	exit(exit_code);
 }
