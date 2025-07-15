@@ -6,7 +6,7 @@
 /*   By: mlemoula <mlemoula@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/06 14:43:05 by mlemoula          #+#    #+#             */
-/*   Updated: 2025/06/10 19:37:33 by mlemoula         ###   ########.fr       */
+/*   Updated: 2025/07/15 11:30:25 by mlemoula         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,11 +91,11 @@ static pid_t	ft_forking(t_pipex *pipex)
 
 static void	ft_execute_child(t_pipex *pipex, int in_fd, int out_fd, char **cmd)
 {
-    if (in_fd == -1)
-    {
-        close(pipex->pipefd[1]);
-        exit(EXIT_SUCCESS);
-    }
+	if (in_fd == -1)
+	{
+		close(pipex->pipefd[1]);
+		exit(EXIT_SUCCESS);
+	}
 	dup2(in_fd, STDIN_FILENO);
 	dup2(out_fd, STDOUT_FILENO);
 	close(pipex->pipefd[0]);
@@ -112,10 +112,12 @@ void	ft_process(t_pipex *pipex)
 
 	pid_1 = ft_forking(pipex);
 	if (pid_1 == 0)
-		ft_execute_child(pipex, pipex->fd_infile, pipex->pipefd[1], pipex->parsed_cmd1);
+		ft_execute_child(pipex, pipex->fd_infile,
+			pipex->pipefd[1], pipex->parsed_cmd1);
 	pid_2 = ft_forking(pipex);
 	if (pid_2 == 0)
-		ft_execute_child(pipex, pipex->pipefd[0], pipex->fd_outfile, pipex->parsed_cmd2);
+		ft_execute_child(pipex, pipex->pipefd[0],
+			pipex->fd_outfile, pipex->parsed_cmd2);
 	close(pipex->pipefd[0]);
 	close(pipex->pipefd[1]);
 	waitpid(pid_1, &status_1, 0);
