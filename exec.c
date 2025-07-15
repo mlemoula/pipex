@@ -6,7 +6,7 @@
 /*   By: mlemoula <mlemoula@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/06 14:43:05 by mlemoula          #+#    #+#             */
-/*   Updated: 2025/07/15 11:30:25 by mlemoula         ###   ########.fr       */
+/*   Updated: 2025/07/15 15:07:46 by mlemoula         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,8 +67,8 @@ static void	ft_execute(t_pipex *pipex, char **cmd)
 	cmd_path = ft_get_cmd_path(pipex, cmd[0]);
 	if (!cmd_path)
 	{
-		perror(cmd[0]);
-		ft_exit(pipex, 1);
+		// perror(cmd[0]);
+		ft_exit(pipex, 127);
 	}
 	execve(cmd_path, cmd, pipex->envp);
 	perror("execve");
@@ -96,8 +96,8 @@ static void	ft_execute_child(t_pipex *pipex, int in_fd, int out_fd, char **cmd)
 		close(pipex->pipefd[1]);
 		exit(EXIT_SUCCESS);
 	}
-	dup2(in_fd, STDIN_FILENO);
-	dup2(out_fd, STDOUT_FILENO);
+	if (dup2(in_fd, STDIN_FILENO) < 0 || dup2(out_fd, STDOUT_FILENO) < 0)
+		perror ("dup2");
 	close(pipex->pipefd[0]);
 	close(pipex->pipefd[1]);
 	ft_execute(pipex, cmd);

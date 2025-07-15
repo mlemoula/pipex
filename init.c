@@ -6,7 +6,7 @@
 /*   By: mlemoula <mlemoula@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/25 18:23:52 by mlemoula          #+#    #+#             */
-/*   Updated: 2025/06/10 18:50:45 by mlemoula         ###   ########.fr       */
+/*   Updated: 2025/07/15 12:25:06 by mlemoula         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ void	ft_init_pipex(t_pipex *pipex, char **argv, char **envp)
 
 void	ft_init_pipe(t_pipex *pipex)
 {
-	if (pipe(pipex->pipefd) != 0)
+	if (pipe(pipex->pipefd) == -1)
 	{
 		perror("pipe");
 		ft_exit(pipex, EXIT_FAILURE);
