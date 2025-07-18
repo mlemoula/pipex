@@ -6,7 +6,7 @@
 /*   By: mlemoula <mlemoula@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/06 14:43:05 by mlemoula          #+#    #+#             */
-/*   Updated: 2025/07/15 15:07:46 by mlemoula         ###   ########.fr       */
+/*   Updated: 2025/07/18 20:22:30 by mlemoula         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,11 +67,19 @@ static void	ft_execute(t_pipex *pipex, char **cmd)
 	cmd_path = ft_get_cmd_path(pipex, cmd[0]);
 	if (!cmd_path)
 	{
-		// perror(cmd[0]);
-		ft_exit(pipex, 127);
+		if (ft_strchr(cmd[0], '/'))
+		{
+			perror(cmd[0]);
+			ft_exit(pipex, 127);
+		}
+		else
+		{
+			ft_putstr_fd(cmd[0], 2);
+			ft_putstr_fd(": command not found\n", 2);
+			ft_exit(pipex, 127);
+		}
 	}
 	execve(cmd_path, cmd, pipex->envp);
-	perror("execve");
 	free(cmd_path);
 	exit(EXIT_FAILURE);
 }
@@ -107,7 +115,6 @@ void	ft_process(t_pipex *pipex)
 {
 	pid_t	pid_1;
 	pid_t	pid_2;
-	int		status_1;
 	int		status_2;
 
 	pid_1 = ft_forking(pipex);
@@ -120,10 +127,7 @@ void	ft_process(t_pipex *pipex)
 			pipex->fd_outfile, pipex->parsed_cmd2);
 	close(pipex->pipefd[0]);
 	close(pipex->pipefd[1]);
-	waitpid(pid_1, &status_1, 0);
 	waitpid(pid_2, &status_2, 0);
-	if (WIFEXITED(status_1) && WEXITSTATUS(status_1) != 0)
-		ft_exit(pipex, EXIT_SUCCESS);
-	if (WIFEXITED(status_2) && WEXITSTATUS(status_2) != 0)
-		ft_exit(pipex, EXIT_FAILURE);
+	if (WIFEXITED(status_2))
+		ft_exit(pipex, WEXITSTATUS(status_2));
 }

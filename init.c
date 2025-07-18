@@ -6,7 +6,7 @@
 /*   By: mlemoula <mlemoula@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/25 18:23:52 by mlemoula          #+#    #+#             */
-/*   Updated: 2025/07/15 12:25:06 by mlemoula         ###   ########.fr       */
+/*   Updated: 2025/07/18 18:35:52 by mlemoula         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,15 +47,16 @@ void	ft_parse_cmds(t_pipex *pipex)
 void	ft_check_files(t_pipex *pipex)
 {
 	if (access(pipex->infile, R_OK) != 0)
+	{
 		perror(pipex->infile);
-		// ft_exit(pipex, EXIT_SUCCESS);
+		pipex->fd_infile = -1;
+	}
 	else
 	{
 		pipex->fd_infile = open(pipex->infile, O_RDONLY);
 		if (pipex->fd_infile < 0)
 		{
 			perror(pipex->infile);
-			// ft_exit(pipex, EXIT_FAILURE);
 		}
 	}
 	if (access(pipex->outfile, F_OK) == 0 && access(pipex->outfile, W_OK) != 0)
