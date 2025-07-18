@@ -6,7 +6,7 @@
 /*   By: mlemoula <mlemoula@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/06 14:43:05 by mlemoula          #+#    #+#             */
-/*   Updated: 2025/07/18 20:22:30 by mlemoula         ###   ########.fr       */
+/*   Updated: 2025/07/18 21:43:14 by mlemoula         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ static char	*ft_get_cmd_path(t_pipex *pipex, char *cmd)
 
 	i = 0;
 	env_path = NULL;
-	if (!cmd || !access(cmd, X_OK))
+	if (!cmd || !access(cmd, X_OK) || ft_is_empty(cmd))
 		return (ft_strdup(cmd));
 	while (pipex->envp[i])
 	{
@@ -65,7 +65,7 @@ static void	ft_execute(t_pipex *pipex, char **cmd)
 	char	*cmd_path;
 
 	cmd_path = ft_get_cmd_path(pipex, cmd[0]);
-	if (!cmd_path)
+	if (!cmd_path || ft_is_empty(cmd_path))
 	{
 		if (ft_strchr(cmd[0], '/'))
 		{

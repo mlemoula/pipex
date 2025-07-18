@@ -6,7 +6,7 @@
 /*   By: mlemoula <mlemoula@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/19 16:20:21 by mlemoula          #+#    #+#             */
-/*   Updated: 2025/06/10 17:29:05 by mlemoula         ###   ########.fr       */
+/*   Updated: 2025/07/18 21:12:08 by mlemoula         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,7 @@ typedef struct s_pipex
 
 void	ft_check_files(t_pipex *pipex);
 void	ft_init_pipex(t_pipex *pipex, char **argv, char **envp);
+int		ft_is_empty(char *s);
 void	ft_parse_cmds(t_pipex *pipex);
 void	ft_clean_charptrptr(char **parsed_cmd);
 void	ft_exit(t_pipex *pipex, int exit_code);

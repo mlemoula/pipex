@@ -6,7 +6,7 @@
 /*   By: mlemoula <mlemoula@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/25 18:23:52 by mlemoula          #+#    #+#             */
-/*   Updated: 2025/07/18 18:35:52 by mlemoula         ###   ########.fr       */
+/*   Updated: 2025/07/18 21:49:18 by mlemoula         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,12 +36,42 @@ void	ft_init_pipe(t_pipex *pipex)
 	}
 }
 
+int	ft_is_empty(char *s)
+{
+	if (!s)
+		return (1);
+	while (*s)
+	{
+		if (!((*s >= 9 && *s <= 13) || *s == 32))
+			return (0);
+		s++;
+	}
+	return (1);
+}
+
 void	ft_parse_cmds(t_pipex *pipex)
 {
-	pipex->parsed_cmd1 = ft_split(pipex->cmd1, ' ');
-	pipex->parsed_cmd2 = ft_split(pipex->cmd2, ' ');
+	if (ft_is_empty(pipex->cmd1) || ft_is_empty(pipex->cmd2))
+	{
+		if (ft_is_empty(pipex->cmd1))
+		{
+			pipex->parsed_cmd1 = malloc(sizeof(char **));
+			pipex->parsed_cmd1[0] = ft_strdup(pipex->cmd1);
+		}
+		if (ft_is_empty(pipex->cmd2))
+		{
+			pipex->parsed_cmd2 = malloc(sizeof(char **));
+			pipex->parsed_cmd2[0] = ft_strdup(pipex->cmd2);
+		}
+	}
+	else
+	{
+		pipex->parsed_cmd1 = ft_split(pipex->cmd1, ' ');
+		pipex->parsed_cmd2 = ft_split(pipex->cmd2, ' ');
+	}
 	if (!pipex->parsed_cmd1 || !pipex->parsed_cmd2)
 		ft_exit(pipex, EXIT_FAILURE);
+
 }
 
 void	ft_check_files(t_pipex *pipex)
