@@ -6,7 +6,7 @@
 /*   By: mlemoula <mlemoula@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/25 18:23:52 by mlemoula          #+#    #+#             */
-/*   Updated: 2025/07/18 21:49:18 by mlemoula         ###   ########.fr       */
+/*   Updated: 2025/07/20 01:51:14 by mlemoula         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,15 +25,7 @@ void	ft_init_pipex(t_pipex *pipex, char **argv, char **envp)
 	pipex->pipefd[0] = -1;
 	pipex->pipefd[1] = -1;
 	pipex->envp = envp;
-}
-
-void	ft_init_pipe(t_pipex *pipex)
-{
-	if (pipe(pipex->pipefd) == -1)
-	{
-		perror("pipe");
-		ft_exit(pipex, EXIT_FAILURE);
-	}
+	pipex->error_msgs = NULL;
 }
 
 int	ft_is_empty(char *s)
@@ -51,53 +43,61 @@ int	ft_is_empty(char *s)
 
 void	ft_parse_cmds(t_pipex *pipex)
 {
-	if (ft_is_empty(pipex->cmd1) || ft_is_empty(pipex->cmd2))
+	if (ft_is_empty(pipex->cmd1))
 	{
-		if (ft_is_empty(pipex->cmd1))
-		{
-			pipex->parsed_cmd1 = malloc(sizeof(char **));
-			pipex->parsed_cmd1[0] = ft_strdup(pipex->cmd1);
-		}
-		if (ft_is_empty(pipex->cmd2))
-		{
-			pipex->parsed_cmd2 = malloc(sizeof(char **));
-			pipex->parsed_cmd2[0] = ft_strdup(pipex->cmd2);
-		}
+		pipex->parsed_cmd1 = malloc(2 * sizeof(char **));
+		pipex->parsed_cmd1[0] = ft_strdup(pipex->cmd1);
+		pipex->parsed_cmd1[1] = NULL;
 	}
 	else
-	{
 		pipex->parsed_cmd1 = ft_split(pipex->cmd1, ' ');
-		pipex->parsed_cmd2 = ft_split(pipex->cmd2, ' ');
+	if (ft_is_empty(pipex->cmd2))
+	{
+		pipex->parsed_cmd2 = malloc(2 * sizeof(char **));
+		pipex->parsed_cmd2[0] = ft_strdup(pipex->cmd2);
+		pipex->parsed_cmd2[1] = NULL;
 	}
+	else
+		pipex->parsed_cmd2 = ft_split(pipex->cmd2, ' ');
 	if (!pipex->parsed_cmd1 || !pipex->parsed_cmd2)
-		ft_exit(pipex, EXIT_FAILURE);
-
+		ft_exit(pipex, 1);
 }
 
 void	ft_check_files(t_pipex *pipex)
 {
 	if (access(pipex->infile, R_OK) != 0)
 	{
-		perror(pipex->infile);
+		ft_set_errno_error(pipex, pipex->infile);
 		pipex->fd_infile = -1;
 	}
 	else
 	{
 		pipex->fd_infile = open(pipex->infile, O_RDONLY);
 		if (pipex->fd_infile < 0)
-		{
-			perror(pipex->infile);
-		}
+			ft_set_errno_error(pipex, pipex->infile);
 	}
 	if (access(pipex->outfile, F_OK) == 0 && access(pipex->outfile, W_OK) != 0)
 	{
-		perror(pipex->outfile);
-		ft_exit(pipex, EXIT_FAILURE);
+		ft_set_errno_error(pipex, pipex->outfile);
+		ft_exit(pipex, 1);
 	}
 	pipex->fd_outfile = open(pipex->outfile, O_CREAT | O_WRONLY | O_TRUNC);
 	if (pipex->fd_outfile < 0)
 	{
-		perror(pipex->outfile);
-		ft_exit(pipex, EXIT_FAILURE);
+		ft_set_errno_error(pipex, pipex->outfile);
+		ft_exit(pipex, 1);
 	}
+}
+
+pid_t	ft_forking(t_pipex *pipex)
+{
+	pid_t	pid;
+
+	pid = fork();
+	if (pid < 0)
+	{
+		ft_set_errno_error(pipex, "fork");
+		ft_exit(pipex, 1);
+	}
+	return (pid);
 }

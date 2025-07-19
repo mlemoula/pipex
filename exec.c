@@ -6,7 +6,7 @@
 /*   By: mlemoula <mlemoula@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/06 14:43:05 by mlemoula          #+#    #+#             */
-/*   Updated: 2025/07/18 21:43:14 by mlemoula         ###   ########.fr       */
+/*   Updated: 2025/07/20 01:50:20 by mlemoula         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ static char	*ft_get_cmd_path(t_pipex *pipex, char *cmd)
 
 	i = 0;
 	env_path = NULL;
-	if (!cmd || !access(cmd, X_OK) || ft_is_empty(cmd))
+	if (ft_is_empty(cmd) || !access(cmd, X_OK))
 		return (ft_strdup(cmd));
 	while (pipex->envp[i])
 	{
@@ -65,36 +65,18 @@ static void	ft_execute(t_pipex *pipex, char **cmd)
 	char	*cmd_path;
 
 	cmd_path = ft_get_cmd_path(pipex, cmd[0]);
-	if (!cmd_path || ft_is_empty(cmd_path))
+	if (ft_is_empty(cmd_path))
 	{
 		if (ft_strchr(cmd[0], '/'))
-		{
-			perror(cmd[0]);
-			ft_exit(pipex, 127);
-		}
+			ft_set_errno_error(pipex, cmd[0]);
 		else
-		{
-			ft_putstr_fd(cmd[0], 2);
-			ft_putstr_fd(": command not found\n", 2);
-			ft_exit(pipex, 127);
-		}
+			ft_set_error(pipex, cmd[0], "command not found");
+		ft_exit(pipex, 127);
 	}
 	execve(cmd_path, cmd, pipex->envp);
+	ft_set_errno_error(pipex, cmd[0]);
 	free(cmd_path);
-	exit(EXIT_FAILURE);
-}
-
-static pid_t	ft_forking(t_pipex *pipex)
-{
-	pid_t	pid;
-
-	pid = fork();
-	if (pid < 0)
-	{
-		perror("fork");
-		ft_exit(pipex, 1);
-	}
-	return (pid);
+	ft_exit(pipex, 1);
 }
 
 static void	ft_execute_child(t_pipex *pipex, int in_fd, int out_fd, char **cmd)
@@ -102,10 +84,13 @@ static void	ft_execute_child(t_pipex *pipex, int in_fd, int out_fd, char **cmd)
 	if (in_fd == -1)
 	{
 		close(pipex->pipefd[1]);
-		exit(EXIT_SUCCESS);
+		exit(0);
 	}
 	if (dup2(in_fd, STDIN_FILENO) < 0 || dup2(out_fd, STDOUT_FILENO) < 0)
-		perror ("dup2");
+	{
+		ft_set_errno_error(pipex, "dup2");
+		ft_exit(pipex, 1);
+	}
 	close(pipex->pipefd[0]);
 	close(pipex->pipefd[1]);
 	ft_execute(pipex, cmd);

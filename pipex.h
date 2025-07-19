@@ -6,7 +6,7 @@
 /*   By: mlemoula <mlemoula@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/19 16:20:21 by mlemoula          #+#    #+#             */
-/*   Updated: 2025/07/18 21:12:08 by mlemoula         ###   ########.fr       */
+/*   Updated: 2025/07/20 01:50:54 by mlemoula         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@
 # include <fcntl.h>
 # include <stdio.h>
 # include <string.h>
+# include <errno.h>
 # include <sys/wait.h>
 
 typedef struct s_pipex
@@ -32,6 +33,7 @@ typedef struct s_pipex
 	int		fd_infile;
 	int		fd_outfile;
 	int		pipefd[2];
+	char	*error_msgs;
 }	t_pipex;
 
 void	ft_check_files(t_pipex *pipex);
@@ -41,7 +43,9 @@ void	ft_parse_cmds(t_pipex *pipex);
 void	ft_clean_charptrptr(char **parsed_cmd);
 void	ft_exit(t_pipex *pipex, int exit_code);
 void	ft_clean(t_pipex *pipex);
-void	ft_init_pipe(t_pipex *pipex);
+pid_t	ft_forking(t_pipex *pipex);
 void	ft_process(t_pipex *pipex);
+void	ft_set_errno_error(t_pipex *pipex, const char *context);
+void	ft_set_error(t_pipex *pipex, const char *context, const char *msg);
 
 #endif
