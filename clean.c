@@ -6,7 +6,7 @@
 /*   By: mlemoula <mlemoula@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/01 16:51:13 by mlemoula          #+#    #+#             */
-/*   Updated: 2025/07/20 15:55:35 by mlemoula         ###   ########.fr       */
+/*   Updated: 2025/07/20 17:25:48 by mlemoula         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,5 +74,7 @@ void	ft_set_error(t_pipex *pipex, const char *context, const char *msg)
 	free(tmp_err_line);
 	if (!complete)
 		return ;
+	if (pipex->error_msgs)
+		free(pipex->error_msgs);
 	pipex->error_msgs = complete;
 }

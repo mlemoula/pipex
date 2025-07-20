@@ -6,7 +6,7 @@
 /*   By: mlemoula <mlemoula@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/06 14:43:05 by mlemoula          #+#    #+#             */
-/*   Updated: 2025/07/20 15:41:00 by mlemoula         ###   ########.fr       */
+/*   Updated: 2025/07/20 18:05:55 by mlemoula         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,6 +71,9 @@ static void	ft_execute(t_pipex *pipex, char **cmd)
 			ft_set_error(pipex, cmd[0], strerror(errno));
 		else
 			ft_set_error(pipex, cmd[0], "command not found");
+		free(cmd_path);
+		if ((access(cmd[0], F_OK) == 0) && (access(cmd[0], X_OK) != 1))
+			ft_exit(pipex, 126);
 		ft_exit(pipex, 127);
 	}
 	execve(cmd_path, cmd, pipex->envp);
@@ -84,6 +87,7 @@ static void	ft_execute_child(t_pipex *pipex, int in_fd, int out_fd, char **cmd)
 	if (in_fd == -1)
 	{
 		close(pipex->pipefd[1]);
+		ft_clean(pipex);
 		exit(0);
 	}
 	if (dup2(in_fd, STDIN_FILENO) < 0 || dup2(out_fd, STDOUT_FILENO) < 0)
