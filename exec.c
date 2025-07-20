@@ -6,7 +6,7 @@
 /*   By: mlemoula <mlemoula@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/06 14:43:05 by mlemoula          #+#    #+#             */
-/*   Updated: 2025/07/20 01:50:20 by mlemoula         ###   ########.fr       */
+/*   Updated: 2025/07/20 15:41:00 by mlemoula         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,13 +68,13 @@ static void	ft_execute(t_pipex *pipex, char **cmd)
 	if (ft_is_empty(cmd_path))
 	{
 		if (ft_strchr(cmd[0], '/'))
-			ft_set_errno_error(pipex, cmd[0]);
+			ft_set_error(pipex, cmd[0], strerror(errno));
 		else
 			ft_set_error(pipex, cmd[0], "command not found");
 		ft_exit(pipex, 127);
 	}
 	execve(cmd_path, cmd, pipex->envp);
-	ft_set_errno_error(pipex, cmd[0]);
+	ft_set_error(pipex, cmd[0], strerror(errno));
 	free(cmd_path);
 	ft_exit(pipex, 1);
 }
@@ -88,7 +88,7 @@ static void	ft_execute_child(t_pipex *pipex, int in_fd, int out_fd, char **cmd)
 	}
 	if (dup2(in_fd, STDIN_FILENO) < 0 || dup2(out_fd, STDOUT_FILENO) < 0)
 	{
-		ft_set_errno_error(pipex, "dup2");
+		ft_set_error(pipex, "dup2", strerror(errno));
 		ft_exit(pipex, 1);
 	}
 	close(pipex->pipefd[0]);

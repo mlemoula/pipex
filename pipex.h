@@ -6,7 +6,7 @@
 /*   By: mlemoula <mlemoula@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/19 16:20:21 by mlemoula          #+#    #+#             */
-/*   Updated: 2025/07/20 01:50:54 by mlemoula         ###   ########.fr       */
+/*   Updated: 2025/07/20 15:41:06 by mlemoula         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,6 @@ void	ft_exit(t_pipex *pipex, int exit_code);
 void	ft_clean(t_pipex *pipex);
 pid_t	ft_forking(t_pipex *pipex);
 void	ft_process(t_pipex *pipex);
-void	ft_set_errno_error(t_pipex *pipex, const char *context);
 void	ft_set_error(t_pipex *pipex, const char *context, const char *msg);
 
 #endif

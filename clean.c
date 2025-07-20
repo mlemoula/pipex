@@ -6,7 +6,7 @@
 /*   By: mlemoula <mlemoula@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/01 16:51:13 by mlemoula          #+#    #+#             */
-/*   Updated: 2025/07/20 01:12:01 by mlemoula         ###   ########.fr       */
+/*   Updated: 2025/07/20 15:55:35 by mlemoula         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,10 +50,7 @@ void	ft_clean(t_pipex *pipex)
 void	ft_exit(t_pipex *pipex, int exit_code)
 {
 	if (pipex->error_msgs)
-	{
-		ft_putstr_fd(pipex->error_msgs, STDERR_FILENO);
-		ft_putstr_fd("\n", STDERR_FILENO);
-	}
+		write(STDERR_FILENO, pipex->error_msgs, ft_strlen(pipex->error_msgs));
 	ft_clean(pipex);
 	exit(exit_code);
 }
@@ -61,17 +58,21 @@ void	ft_exit(t_pipex *pipex, int exit_code)
 void	ft_set_error(t_pipex *pipex, const char *context, const char *msg)
 {
 	char	*tmp;
+	char	*tmp_err_line;
+	char	*complete;
 
 	if (!pipex || !context || !msg)
 		return ;
 	tmp = ft_strjoin(context, ": ");
 	if (!tmp)
 		return ;
-	pipex->error_msgs = ft_strjoin(tmp, msg);
+	tmp_err_line = ft_strjoin(tmp, msg);
 	free(tmp);
-}
-
-void	ft_set_errno_error(t_pipex *pipex, const char *context)
-{
-	ft_set_error(pipex, context, strerror(errno));
+	if (!tmp_err_line)
+		return ;
+	complete = ft_strjoin(tmp_err_line, "\n");
+	free(tmp_err_line);
+	if (!complete)
+		return ;
+	pipex->error_msgs = complete;
 }

@@ -6,7 +6,7 @@
 /*   By: mlemoula <mlemoula@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/19 16:15:49 by mlemoula          #+#    #+#             */
-/*   Updated: 2025/07/20 01:49:44 by mlemoula         ###   ########.fr       */
+/*   Updated: 2025/07/20 16:02:02 by mlemoula         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ int	main(int argc, char **argv, char **envp)
 	ft_parse_cmds(&pipex);
 	if (pipe(pipex.pipefd) == -1)
 	{
-		ft_set_errno_error(&pipex, "pipe");
+		ft_set_error(&pipex, "pipe", strerror(errno));
 		ft_exit(&pipex, 1);
 	}
 	ft_process(&pipex);

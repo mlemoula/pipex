@@ -6,7 +6,7 @@
 /*   By: mlemoula <mlemoula@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/25 18:23:52 by mlemoula          #+#    #+#             */
-/*   Updated: 2025/07/20 01:51:14 by mlemoula         ###   ########.fr       */
+/*   Updated: 2025/07/20 15:39:27 by mlemoula         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,24 +67,24 @@ void	ft_check_files(t_pipex *pipex)
 {
 	if (access(pipex->infile, R_OK) != 0)
 	{
-		ft_set_errno_error(pipex, pipex->infile);
+		ft_set_error(pipex, pipex->infile, strerror(errno));
 		pipex->fd_infile = -1;
 	}
 	else
 	{
 		pipex->fd_infile = open(pipex->infile, O_RDONLY);
 		if (pipex->fd_infile < 0)
-			ft_set_errno_error(pipex, pipex->infile);
+			ft_set_error(pipex, pipex->infile, strerror(errno));
 	}
 	if (access(pipex->outfile, F_OK) == 0 && access(pipex->outfile, W_OK) != 0)
 	{
-		ft_set_errno_error(pipex, pipex->outfile);
+		ft_set_error(pipex, pipex->outfile, strerror(errno));
 		ft_exit(pipex, 1);
 	}
 	pipex->fd_outfile = open(pipex->outfile, O_CREAT | O_WRONLY | O_TRUNC);
 	if (pipex->fd_outfile < 0)
 	{
-		ft_set_errno_error(pipex, pipex->outfile);
+		ft_set_error(pipex, pipex->outfile, strerror(errno));
 		ft_exit(pipex, 1);
 	}
 }
@@ -96,7 +96,7 @@ pid_t	ft_forking(t_pipex *pipex)
 	pid = fork();
 	if (pid < 0)
 	{
-		ft_set_errno_error(pipex, "fork");
+		ft_set_error(pipex, "fork", strerror(errno));
 		ft_exit(pipex, 1);
 	}
 	return (pid);
