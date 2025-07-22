@@ -6,7 +6,7 @@
 /*   By: mlemoula <mlemoula@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/06 14:43:05 by mlemoula          #+#    #+#             */
-/*   Updated: 2025/07/20 18:05:55 by mlemoula         ###   ########.fr       */
+/*   Updated: 2025/07/22 16:04:50 by mlemoula         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,7 +72,7 @@ static void	ft_execute(t_pipex *pipex, char **cmd)
 		else
 			ft_set_error(pipex, cmd[0], "command not found");
 		free(cmd_path);
-		if ((access(cmd[0], F_OK) == 0) && (access(cmd[0], X_OK) != 1))
+		if ((access(cmd[0], F_OK) == 0) && (access(cmd[0], X_OK) != 0))
 			ft_exit(pipex, 126);
 		ft_exit(pipex, 127);
 	}
@@ -116,7 +116,8 @@ void	ft_process(t_pipex *pipex)
 			pipex->fd_outfile, pipex->parsed_cmd2);
 	close(pipex->pipefd[0]);
 	close(pipex->pipefd[1]);
-	waitpid(pid_2, &status_2, 0);
+	waitpid(pid_1, &status_2, 0);
+	wait(NULL);
 	if (WIFEXITED(status_2))
 		ft_exit(pipex, WEXITSTATUS(status_2));
 }
